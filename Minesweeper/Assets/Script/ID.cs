@@ -11,7 +11,6 @@ public class ID : MonoBehaviour {
 	public Image mine;
 	public bool open;
 	public bool flag;
-	public bool aketa;
 	system sys;
 
 	void Start(){
@@ -20,16 +19,14 @@ public class ID : MonoBehaviour {
 	}
 
 	void Update(){
-		if (open == true) {
-			if (aketa = false) {
-				if (flag == false) {
-					sys.Check (x, y);
-					aketa = true;
-					if (sys.mine [x, y] == 1) {
-						mine.enabled = true;
-					} else {
-						text.text = sys.stage [x, y].ToString ();
-					}
+		
+		if(open == true){
+			if (flag == false) {
+				sys.Check (x, y);
+				if (sys.mine [x, y] == 1) {
+					mine.enabled = true;
+				} else {
+					text.text = sys.stage [x, y].ToString ();
 				}
 			}
 		}
@@ -39,7 +36,7 @@ public class ID : MonoBehaviour {
 		if (sys.first == false) {
 			sys.first = !sys.first;
 			sys.SetMine_first (x, y);
-//			open = true;
+			open = true;
 		} else {
 			if (sys.flag == true) {
 				if (open == false) {

@@ -38,7 +38,6 @@ public class system : MonoBehaviour {
 		for (int x = 0; x < range; x++) {
 			for (int y = 0; y < range; y++) {
 				mine [x, y] = 0;
-				Debug.Log("x = " + x + " , " + "y = " + y);
 			}
 		}
 		cub = new Cube[range, range];
@@ -63,15 +62,9 @@ public class system : MonoBehaviour {
 
 		text.text = "x " + MineCount.ToString ();
 
-//		SetMine ();
-//		CheckMine ();
+		//SetMine ();
+		//CheckMine ();
 
-	}
-
-	void Update(){
-		if (Input.GetKeyDown ("z")) {
-			CheckMine ();
-		}
 	}
 
 	public void flagManager(){
@@ -107,46 +100,35 @@ public class system : MonoBehaviour {
 
 	public void SetMine_first(int x,int y) {
 
-		Debug.Log("first x = " + x + " , " + "y = " + y);
+		Debug.Log ("RANGE" + range);
 
-		if (range * range > MineCount) {
-			for (int i = 0; i < MineCount;) {
-				random_x = Random.Range (0, range);
-				random_y = Random.Range (0, range);
-				Debug.Log (random_x + "," + random_y);
-				if (mine [random_x, random_y] != 1 && random_x != x && random_y != y) {
-					mine [random_x, random_y] = 1;
-					i++;
-				} else {
-					i = MineCount;
-					Debug.Log ("koko");
-				}
+		for (int i = 0; i < MineCount;) {
+		
+			int rx = Random.Range(0, range);
+			int ry = Random.Range(0, range);
+		
+			while (rx == x && ry == y) {
+
+				rx = Random.Range(0, range);
+				ry = Random.Range(0, range);
 			}
-		} else {
-			for(int i = 0; i < MineCount;){
-				random_x = Random.Range (0, range-1);
-				random_y = Random.Range (0, range-1);
-				Debug.Log (range);
-				if(mine[random_x,random_y] != 1){
-					mine [random_x,random_y] = 1;
-					i++;
-				}
+
+			if (mine [rx, ry] == 0) {
+				mine [rx, ry] = 1;
+				Debug.Log ("X" + x + " Y" + y + "\n" + rx + "," + ry);
+				Debug.Log ("MINE" + mine [rx, ry]);
+				i++;
 			}
 		}
 
-
-		Debug.Log ("Finish");
+		mine [x, y] = 0;
 		CheckMine ();
-		_id [x, y].open = true;
-//		Check (x, y);
 
 	}
 
 
 	public void CheckMine() {
-		
 		for (int x = 0; x < range; x++) {
-			
 			for (int y = 0; y < range; y++) {
 				
 				if(x - 1 != -1){
@@ -176,7 +158,7 @@ public class system : MonoBehaviour {
 						stage [x, y]++;
 					}
 				}
-				Debug.Log (x + "," + y + "右：" + right + "左：" + left + "上：" + up + "下：" + down);
+//				Debug.Log (x + "," + y + "右：" + right + "左：" + left + "上：" + up + "下：" + down);
 				if (right == 1) {
 					if (up == 1) {
 						if (mine [x + 1, y - 1] == 1) {
@@ -214,7 +196,6 @@ public class system : MonoBehaviour {
 	}
 
 	public void Check(int x, int y){
-		Debug.Log ("a");
 		nav.Move (cub [x, y]);
 		if (stage [x, y] == 0) {
 			if (x - 1 != -1) {
