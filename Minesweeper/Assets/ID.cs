@@ -19,6 +19,7 @@ public class ID : MonoBehaviour {
 	}
 
 	void Update(){
+		
 		if(open == true){
 			if (flag == false) {
 				sys.Check (x, y);
