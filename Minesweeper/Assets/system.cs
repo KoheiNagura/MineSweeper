@@ -62,8 +62,8 @@ public class system : MonoBehaviour {
 
 		text.text = "x " + MineCount.ToString ();
 
-		SetMine ();
-		CheckMine ();
+		//SetMine ();
+		//CheckMine ();
 
 	}
 
@@ -99,26 +99,29 @@ public class system : MonoBehaviour {
 	}
 
 	public void SetMine_first(int x,int y) {
-		if (range * range > MineCount) {
-			for (int i = 0; i < MineCount;) {
-				random_x = Random.Range (0, range--);
-				random_y = Random.Range (0, range--);
-				Debug.Log (random_x + "," + random_y);
-				if (mine [random_x, random_y] != 1 && random_x != x && random_y != y) {
-					mine [random_x, random_y] = 1;
-					i++;
-				}
+
+		Debug.Log ("RANGE" + range);
+
+		for (int i = 0; i < MineCount;) {
+		
+			int rx = Random.Range(0, range);
+			int ry = Random.Range(0, range);
+		
+			while (rx == x && ry == y) {
+
+				rx = Random.Range(0, range);
+				ry = Random.Range(0, range);
 			}
-		} else {
-			for(int i = 0; i < MineCount;){
-				random_x = Random.Range (0, range--);
-				random_y = Random.Range (0, range--);
-				if(mine[random_x,random_y] != 1){
-					mine [random_x,random_y] = 1;
-					i++;
-				}
+
+			if (mine [rx, ry] == 0) {
+				mine [rx, ry] = 1;
+				Debug.Log ("X" + x + " Y" + y + "\n" + rx + "," + ry);
+				Debug.Log ("MINE" + mine [rx, ry]);
+				i++;
 			}
 		}
+
+		mine [x, y] = 0;
 		CheckMine ();
 
 	}
